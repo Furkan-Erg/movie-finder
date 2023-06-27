@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import MovieService from "../services/movie.service";
 import { MovieModel, MovieResponse } from "../models/movieResponse";
 import MovieCard from "./movie-card";
+import { Link } from "react-router-dom";
 export default class movies extends Component {
   state = {
     movies: [] as MovieModel[],
@@ -85,7 +86,9 @@ export default class movies extends Component {
           <div className="row">
             {movies.map((movie) => (
               <div key={movie.id} className="col">
-                <MovieCard movie={movie} />
+                <Link to={"/movie-details/" + movie.id}>
+                  <MovieCard movie={movie} />
+                </Link>
               </div>
             ))}
           </div>

@@ -1,16 +1,12 @@
 import "./App.css";
+import AllRoutes from "./components/all-routes";
 import Navbar from "./components/navbar";
-import Movies from "./components/movies";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+
 function App() {
   return (
     <div>
       <Navbar />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/movies/:category" element={<Movies />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <AllRoutes />
     </div>
   );
 }
