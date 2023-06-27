@@ -1,28 +1,36 @@
 import React, { Component, useState } from "react";
 import MovieService from "../services/movie.service";
 import { MovieModel, MovieResponse } from "../models/movieResponse";
+import MovieCard from "./movie-card";
+import { Link } from "react-router-dom";
 export default class movies extends Component {
   state = {
     movies: [] as MovieModel[],
     movieResponse: {} as MovieResponse,
-    movieOption: "upcoming",
+    movieOption: "",
     title: "",
   };
   movieService = new MovieService();
   componentDidMount() {
+    this.setMovieOption();
     this.getMovies();
   }
-  clickToSee() {
-    console.log("clicked");
+
+  setMovieOption() {
+    let category = window.location.pathname.split("/")[2];
+    if (category) {
+      this.state.movieOption = category;
+    }
   }
 
   getMovies() {
-    switch (this.state.movieOption) {
+    const { movieOption } = this.state;
+    switch (movieOption) {
       case "popular":
         this.getPopularMovies();
         this.setState({ title: "Popular Movies" });
         break;
-      case "topRated":
+      case "top-rated":
         this.getTopRatedMovies();
         this.setState({ title: "Top Rated Movies" });
         break;
@@ -30,7 +38,7 @@ export default class movies extends Component {
         this.getUpcomingMovies();
         this.setState({ title: "Upcoming Movies" });
         break;
-      case "nowPlaying":
+      case "now-playing":
         this.getNowPlayingMovies();
         this.setState({ title: "Now Playing Movies" });
         break;
@@ -77,21 +85,10 @@ export default class movies extends Component {
         <div className="container d-flex justify-content-center align-items-center flex-column">
           <div className="row">
             {movies.map((movie) => (
-              <div className="col">
-                <div
-                  className="card m-2 overflow-hidden"
-                  style={{ cursor: "pointer", width: "18rem", height: "36rem" }}
-                >
-                  <img
-                    className="card-img-top img-fluid h-70"
-                    src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
-                    alt={"image of " + movie.title}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{movie.title}</h5>
-                    <p className="card-text ">{movie.overview}</p>
-                  </div>
-                </div>
+              <div key={movie.id} className="col">
+                <Link to={"/movie-details/" + movie.id}>
+                  <MovieCard movie={movie} />
+                </Link>
               </div>
             ))}
           </div>

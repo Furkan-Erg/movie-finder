@@ -1,12 +1,12 @@
 import "./App.css";
+import AllRoutes from "./components/all-routes";
 import Navbar from "./components/navbar";
-import Movies from "./components/movies";
+
 function App() {
   return (
     <div>
-      <Movies />
-      {/* <Navbar /> */}
-      {/* <div>router will be here</div> */}
+      <Navbar />
+      <AllRoutes />
     </div>
   );
 }

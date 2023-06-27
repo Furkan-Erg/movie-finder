@@ -29,7 +29,7 @@ export default class movieService {
     let url: string = "movie/upcoming";
     return this.api.get<MovieResponse>(url);
   }
-  getMovieDetail(movieId: string): Promise<AxiosResponse<MovieResponse>> {
+  getMovieDetails(movieId: string): Promise<AxiosResponse<MovieResponse>> {
     let url: string = "movie/" + movieId;
     return this.api.get<MovieResponse>(url);
   }
