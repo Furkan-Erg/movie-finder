@@ -6,24 +6,30 @@ export default class movies extends Component {
   state = {
     movies: [] as MovieModel[],
     movieResponse: {} as MovieResponse,
-    movieOption: "upcoming",
+    movieOption: "",
     title: "",
   };
   movieService = new MovieService();
   componentDidMount() {
+    this.setMovieOption();
     this.getMovies();
   }
-  clickToSee() {
-    console.log("clicked");
+
+  setMovieOption() {
+    let category = window.location.pathname.split("/")[2];
+    if (category) {
+      this.state.movieOption = category;
+    }
   }
 
   getMovies() {
-    switch (this.state.movieOption) {
+    const { movieOption } = this.state;
+    switch (movieOption) {
       case "popular":
         this.getPopularMovies();
         this.setState({ title: "Popular Movies" });
         break;
-      case "topRated":
+      case "top-rated":
         this.getTopRatedMovies();
         this.setState({ title: "Top Rated Movies" });
         break;
@@ -31,7 +37,7 @@ export default class movies extends Component {
         this.getUpcomingMovies();
         this.setState({ title: "Upcoming Movies" });
         break;
-      case "nowPlaying":
+      case "now-playing":
         this.getNowPlayingMovies();
         this.setState({ title: "Now Playing Movies" });
         break;
@@ -78,8 +84,8 @@ export default class movies extends Component {
         <div className="container d-flex justify-content-center align-items-center flex-column">
           <div className="row">
             {movies.map((movie) => (
-              <div className="col">
-                <MovieCard key={movie.id} movie={movie} />
+              <div key={movie.id} className="col">
+                <MovieCard movie={movie} />
               </div>
             ))}
           </div>
